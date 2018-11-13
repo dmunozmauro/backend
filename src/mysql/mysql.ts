@@ -12,11 +12,30 @@ export default class MySQL {
             host: 'localhost',
             user: 'node_user',
             password: '123456',
-            database: 'node_db'
+            database: 'node_bd'
         });
 
-        this.cnn.connect();
+        this.conectarDB();
     }
+
+    public static get instance() {
+        return this._instance || (this._instance = new this());
+    }
+
+    static ejecutarQuery(query:string, callback: Function) {
+        this.instance.cnn.query('query', (err, results: Object[], fields) => {
+            if(err) {
+                console.log('Error en la query' + err);
+                return callback(err);
+            }
+            if(results.length === 0) {
+                callback('El registro solicitado no existe')
+            } else {
+            callback(null, results);
+            }
+        });
+    }
+
 
     private conectarDB() {
         this.cnn.connect((errorDb: mysql.MysqlError) => {

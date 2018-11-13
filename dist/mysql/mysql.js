@@ -1,25 +1,39 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const mysql_1 = __importDefault(require("mysql"));
+const mysql = require("mysql");
 class MySQL {
     constructor() {
         this.conect = false;
         console.log('BD iniciada');
-        this.cnn = mysql_1.default.createConnection({
+        this.cnn = mysql.createConnection({
             host: 'localhost',
-            user: 'root',
-            password: '',
-            database: 'node_db'
+            user: 'node_user',
+            password: '123456',
+            database: 'node_bd'
         });
-        this.cnn.connect();
+        this.conectarDB();
+    }
+    static get instance() {
+        return this._instance || (this._instance = new this());
+    }
+    static ejecutarQuery(query, callback) {
+        this.instance.cnn.query('query', (err, results, fields) => {
+            if (err) {
+                console.log('Error en la query' + err);
+                return callback(err);
+            }
+            if (results.length === 0) {
+                callback('El registro solicitado no existe');
+            }
+            else {
+                callback(null, results);
+            }
+        });
     }
     conectarDB() {
-        this.cnn.connect((error) => {
-            if (error) {
-                console.log(error.message);
+        this.cnn.connect((errorDb) => {
+            if (errorDb) {
+                console.log(errorDb.message);
                 return;
             }
             this.conect = true;
