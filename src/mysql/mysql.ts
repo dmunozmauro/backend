@@ -10,8 +10,8 @@ export default class MySQL {
         console.log('BD iniciada');
         this.cnn = mysql.createConnection({
             host: 'localhost',
-            user: 'node_user',
-            password: '123456',
+            user: 'root',
+            password: '',
             database: 'node_bd'
         });
 
@@ -23,7 +23,7 @@ export default class MySQL {
     }
 
     static ejecutarQuery(query:string, callback: Function) {
-        this.instance.cnn.query('query', (err, results: Object[], fields) => {
+        this.instance.cnn.query(query, (err, results: Object[], fields) => {
             if(err) {
                 console.log('Error en la query' + err);
                 return callback(err);

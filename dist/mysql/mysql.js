@@ -7,8 +7,8 @@ class MySQL {
         console.log('BD iniciada');
         this.cnn = mysql.createConnection({
             host: 'localhost',
-            user: 'node_user',
-            password: '123456',
+            user: 'root',
+            password: '',
             database: 'node_bd'
         });
         this.conectarDB();
@@ -17,7 +17,7 @@ class MySQL {
         return this._instance || (this._instance = new this());
     }
     static ejecutarQuery(query, callback) {
-        this.instance.cnn.query('query', (err, results, fields) => {
+        this.instance.cnn.query(query, (err, results, fields) => {
             if (err) {
                 console.log('Error en la query' + err);
                 return callback(err);
