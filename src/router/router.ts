@@ -12,10 +12,7 @@ router.get('/familia', (req: Request, res: Response) => {
                 error: err
             });
         } else {
-            res.json({
-                ok: true,
-                familia: familia
-            });
+            res.json(familia);
         }
     });
 });
@@ -31,10 +28,7 @@ router.get('/familia/:id', (req: Request, res: Response) => {
                 error: err
             });
         } else {
-            res.json({
-                ok: true,
-                familia: familia
-            });
+            res.json(familia);
         }
     });
 });

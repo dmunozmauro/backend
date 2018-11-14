@@ -16,10 +16,7 @@ router.get('/familia', (req, res) => {
             });
         }
         else {
-            res.json({
-                ok: true,
-                familia: familia
-            });
+            res.json(familia);
         }
     });
 });
@@ -35,10 +32,7 @@ router.get('/familia/:id', (req, res) => {
             });
         }
         else {
-            res.json({
-                ok: true,
-                familia: familia
-            });
+            res.json(familia);
         }
     });
 });
