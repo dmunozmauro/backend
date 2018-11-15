@@ -33,4 +33,22 @@ router.get('/familia/:id', (req: Request, res: Response) => {
     });
 });
 
+
+router.post('/familia/insertar', (req: Request, res: Response) => {
+
+    const queryInsert = "INSERT INTO prueba VALUES (10,'PRUEBA','PRUEBA','PRUEBA');";
+    MySQL.ejecutarQuery(queryInsert, (err: any, familia: Object[]) => {
+        if (err) {
+            res.status(400).json({
+                ok: false,
+                error: err
+            });
+        } else {
+            res.json(console.log('registro ingresado')
+            );
+        }
+        
+    });
+});
+
 export default router;

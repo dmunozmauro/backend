@@ -4,7 +4,7 @@ export default class MySQL {
 
     cnn: mysql.Connection;
     conect: boolean = false;
-    private static _instance: MySQL;
+    //private static _instance: MySQL;
 
     constructor() {
         console.log('BD iniciada');
@@ -14,15 +14,15 @@ export default class MySQL {
             password: '',
             database: 'node_bd'
         });
-
         this.conectarDB();
     }
 
-    public static get instance() {
-        return this._instance || (this._instance = new this());
-    }
 
-    static ejecutarQuery(query:string, callback: Function) {
+   /*  public static get instance() {
+        return this._instance || (this._instance = new this());
+    } */
+
+    /* static ejecutarQuery(query:string, callback: Function) {
         this.instance.cnn.query(query, (err, results: Object[], fields) => {
             if(err) {
                 console.log('Error en la query' + err);
@@ -34,9 +34,12 @@ export default class MySQL {
             callback(null, results);
             }
         });
+    } */
+
+   /*  static insertBD() {
+        this.instance.cnn.query("INSERT INTO prueba VALUES (10,'PRUEBA','PRUEBA','PRUEBA')", '');
     }
-
-
+ */
     private conectarDB() {
         this.cnn.connect((errorDb: mysql.MysqlError) => {
             if (errorDb) {
