@@ -2,6 +2,7 @@
 
 var Project = require('../models/portafolio');
 var fs = require('fs');
+var path = require('path');
 
 var controller = {
     saveProject: function (req, res) {
@@ -76,7 +77,7 @@ var controller = {
             var extSplit = fileName.split('.');
             var fileExt = extSplit[1];
 
-            if (fileExt == 'png' || fileExt == 'jpg' || fileExt == 'jpeg' || fileExt == 'gif') {
+            if (fileExt == 'png' || fileExt == 'jpg' || fileExt == 'JPG' || fileExt == 'jpeg' || fileExt == 'gif') {
 
                 Project.findByIdAndUpdate(proyectoID, { image: fileName }, { new: true }, (err, projectImage) => {
                     if (err) return res.status(500).send({ message: 'Error al cargar imagen method uploadImage' });
@@ -85,13 +86,28 @@ var controller = {
                 });
             } else {
                 fs.unlink(filePath, (err) => {
-                    return res.status(200).send({message: 'Extension no valida'});
+                    return res.status(200).send({ message: 'Extension no valida' });
                 });
             }
 
         } else {
             return res.status(200).send({ message: fileName });
         }
+    },
+
+    getImageFile: function (req, res) {
+        var file = req.params.image;
+        var path_file = './uploads/' + file;
+
+        fs.exists(path_file, (exists) => {
+            if (exists) {
+                return res.sendFile(path.resolve(path_file));
+            } else {
+                return res.status(200).send({
+                    message: 'Imagen no existe'
+                })
+            }
+        });
     }
 };
 
